@@ -1,0 +1,57 @@
+     A          R TITLE
+     A                                  1 50'Weekly Payroll Report'
+     A                                  1 17TIME
+     A                                  1  8DATE
+     A                                      EDTCDE(Y)
+     A                                  2  5'Ashwin Anand'
+     A                                  1107'Page:'
+     A                                  1112PAGNBR
+     A          R COLHDG
+     A                                     5'Employee'
+     A                                      SPACEB(2)
+     A                                    24'Work'
+     A                                    36'Pay'
+     A                                    47'Hourly'
+     A                                    57'Hours'
+     A                                    70'Regular'
+     A                                    92'Overtime'
+     A                                   110'Total'
+     A                                     6'Number'
+     A                                      SPACEB(1)
+     A                                   111'Pay'
+     A                                    24'Shift'
+     A                                    36'Class'
+     A                                    48'Rate'
+     A                                    57'Worked'
+     A                                    72'Pay'
+     A                                    94'Pay'
+     A          R EMPDETAIL                 SPACEB(4)
+     A            EMPNUM    R              5REFFLD(SHIFTWEEK/EMPNUM SENECAPAY/S-
+     A                                      HIFTWEEK)
+     A                                      EDTWRD('0  -   -   -')
+     A            WORKSHIFT R             25REFFLD(SHIFTWEEK/WORKSHIFT +
+     A                                      SENECAPAY/SHIFTWEEK)
+     A            PAYCLASS  R    1        38REFFLD(SHIFTWEEK/PAYCLASS +
+     A                                      SENECAPAY/SHIFTWEEK)
+     A            HOURLYRATE     5  2     47EDTCDE(1)
+     A            HRSWORKED R     S       58REFFLD(SHIFTWEEK/HRSWORKED +
+     A                                      SENECAPAY/SHIFTWEEK)
+     A                                      EDTCDE(1)
+     A            REGULARPAY     7  2     69EDTCDE(1)
+     A            OVERPAY        7  2     91EDTCDE(2)
+     A            WEEKLYPAY      7  2    107EDTCDE(1)
+     A          R TOTALS                    SPACEB(1)
+     A                                    51'Totals'
+     A            TOTREGPAY      9  2     65EDTCDE(1 $)
+     A            TOTOVTPAY      9  2     87EDTCDE(1 $)
+     A            TOTWKPAY       9  2    103EDTCDE(1 $)
+
+     A*%%RS+<record-sequences>
+     A*%%RS+ <sequence name="REPORT1">
+     A*%%RS+  <device type="printer" width="132" height="66" />
+     A*%%RS+  <record-write record-format="TITLE" />
+     A*%%RS+  <record-write record-format="COLHDG" />
+     A*%%RS+  <record-write record-format="EMPDETAIL" />
+     A*%%RS+  <record-write record-format="TOTALS" />
+     A*%%RS+ </sequence>
+     A*%%RS </record-sequences>

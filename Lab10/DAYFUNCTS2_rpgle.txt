@@ -1,0 +1,34 @@
+         Ctl-Opt NoMain;
+
+         /COPY LAB10,DAYPROTO
+
+         Dcl-Proc DayNumName EXPORT;
+
+           Dcl-s DayName CHAR(9);
+
+           Dcl-PI *n CHAR(9);
+             Number Packed(1);
+           END-PI;
+
+           Dcl-DS DayData;
+             *n Char(9) Inz('Monday');
+             *n Char(9) Inz('Tuesday');
+             *n Char(9) Inz('Wednesday');
+             *n Char(9)Inz('Thursday');
+             *n Char(9) Inz('Friday');
+             *n Char(9)Inz('Saturday');
+             *n Char(9) Inz('Sunday');
+
+             DayArray Char(9) Dim(7) Pos(1); // converting the DS to array
+
+
+           END-DS;
+
+            If (Number > 7 OR Number < 1);
+               DayName = 'BADNUMBER';
+            ELSE;
+               DayName =  DayArray(Number);
+            ENDIF;
+            Return DayName;
+         END-PROC;
+

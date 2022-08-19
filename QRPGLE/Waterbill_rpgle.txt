@@ -1,0 +1,86 @@
+        DCL-F WATERDSP WORKSTN;
+        DCL-S RATE ZONED(3 : 2);
+         EXFMT GETDATA;
+         DOW NOT(*IN03);
+           If  Cubicm <= 0;
+              *IN98 = *ON;
+              EXFMT GETDATA;      // Pause your program
+              *IN98 = *OFF;
+              ITER;
+           ElseIf Zone = ' ';
+             *IN97 = *ON;
+              EXFMT GETDATA;
+             *IN97 = *OFF;
+              ITER;
+           ELSE;
+             EXSR CalculateBill;
+             EVAL(H) Gallon = Cubicm * 219.969;
+             *IN99 = *ON;
+             *IN95 = *ON;
+             IF Cubicm > 100;
+              *IN91 = *ON;
+             EndIf;
+             WRITE GETDATA;
+             EXFMT SHOWRESULT;
+              If *IN04 = *ON;
+                EXFMT HGHBILLRSN;
+              ENDIF;
+             *IN95 = *OFF;
+             *IN91 = *OFF;
+             *IN99 = *OFF;
+
+           ENDIf;
+
+             If *IN03=*OFF;
+                EXSR CLEAR;
+                EXFMT GETDATA;
+             ENDIF;
+
+
+         ENDDO;
+
+         *INLR = *ON;
+         RETURN;
+
+         BEGSR CalculateBill;
+           SELECT;
+             When Cubicm <= 15;
+               RATE = 2.3;
+             When Cubicm <= 29;
+               RATE = 2.54;
+             When Cubicm <= 59;
+               RATE = 2.66;
+             When Cubicm <= 75;
+               RATE = 2.77;
+             When Cubicm <= 999;
+               RATE = 2.85;
+
+           ENDSL;
+
+
+
+
+           EVAL(H) WaterChg = Cubicm * RATE;
+           EVAL(H) SEWERCHG = Cubicm * 2.76;
+
+           SELECT;
+              When ZONE = 'A' OR ZONE = 'B' OR ZONE = 'C';
+                CAPITALCST = 18.75;
+              When ZONE = 'E' OR ZONE = 'F';
+                CAPITALCST = 0.08 * (SewerChg + WaterChg);
+              When ZONE = 'G' OR ZONE = 'H';
+                CAPITALCST = 0.055 * (SewerChg + WaterChg);
+              OTHER;
+                CAPITALCST = 0;
+           ENDSL;
+
+           EVAL(H) TOTALDUE = SewerChg + WaterChg + CapitalCst;
+           DISCOUNT = 0.045 * Totaldue;
+           DUEAFTDSC = TotalDue - Discount;
+         ENDSR;
+
+         BEGSR CLEAR;
+           CUBICM = 0;
+           ZONE = ' ';
+
+         ENDSR;

@@ -1,0 +1,12 @@
+/********************************************************************************/
+/*  SYSVALPRG - display system value                                            */
+/*                                                                              */
+/*  Coded by: Ashwin Anand                                                      */
+/*                                                                              */
+/*  May, 10 2022                                                              */
+DSPLIBL
+EDTLIBL
+DSPLIBL
+DSPSYSVAL QSYSLIBL
+DSPSYSVAL QUSRLIBL
+DSPSYSVAL QMODEL

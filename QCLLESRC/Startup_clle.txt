@@ -1,0 +1,7 @@
+             PGM
+             CALL       STRJOB
+             ADDLIBLE   SENECAPAY
+             ADDLIBLE   BCI433LIB
+             MONMSG     CPF2103
+             DSPSYSLVL  *DISPLAY
+             ENDPGM

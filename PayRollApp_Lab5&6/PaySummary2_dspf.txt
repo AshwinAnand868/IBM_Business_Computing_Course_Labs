@@ -1,0 +1,30 @@
+     A          R RECORD1
+     A                                  2  4USER
+     A                                  3  4'Ashwin Anand'
+     A                                  2 21'S E N E C A   Payroll Program Comp-
+     A                                      leted'
+     A                                  2 71DATE
+     A                                      EDTCDE(Y)
+     A                                  3 71TIME
+     A                                  5 10'Rates:'
+     A                                  6 18'Day Hours:'
+     A                                  7 18'Afternoon Hours:'
+     A                                  8 18'Night Hours:'
+     A            DAYHOURS  R        O  6 38REFFLD(SHIFTRATES/DAYHRS +
+     A                                      SENECAPAY/SHIFTRATES)
+     A                                      EDTCDE(1)
+     A            AFTHOURS  R        O  7 38REFFLD(SHIFTRATES/NIGHTHRS +
+     A                                      SENECAPAY/SHIFTRATES)
+     A                                      EDTCDE(1)
+     A            NGTHOURS  R        O  8 38REFFLD(SHIFTRATES/AFTHRS +
+     A                                      SENECAPAY/SHIFTRATES)
+     A                                      EDTCDE(1)
+     A                                 11 10'Totals:'
+     A                                 12 18'Regular Pay:'
+     A                                 13 18'Overtime Pay:'
+     A                                 14 18'Company Payout:'
+     A            REGPAY         9  2O 12 40EDTCDE(1)
+     A            TTLPAYOUT      9  2  14 39EDTCDE(1 $)
+     A            OVRPAY         9  2  13 40EDTCDE(1)
+     A            SHIFTTYPE     30   O 10 18
+

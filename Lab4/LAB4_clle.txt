@@ -1,0 +1,126 @@
+             PGM
+
+             DCLF       LAB4DSP
+             DCL        &SETTING *CHAR 30
+             DCL        &INLPGM *CHAR 10
+             DCL        &INLPGMLIB *CHAR 10
+             DCL        &PRVSIGN *CHAR 20
+             DCL        &CRTAUT *CHAR 10
+             DCL        &RTNUSRPRF *CHAR 10
+
+             SNDRCVF
+
+             DOWHILE    (&IN03 = '0')
+
+                CALLSUBR   INITIALIZE /* NOT INSIDE THE DO LOOP */
+
+                SELECT
+
+                   WHEN       COND(&IN21) THEN(DO)
+                      CALL       QUSCMDLN
+
+                   ENDDO
+
+
+
+
+                   WHEN       (&OPTION = '1') THEN(DO)
+                      CALL       WATERBILL
+                      CHGVAR     &MSGTXT1 ('The students Water Bill RPGLE program was run')
+                      CHGVAR     &MSGTXT2 ('CLLE Programs can manage how an RPGLE Business +
+                                   Application is run')
+
+
+                   ENDDO
+
+                   WHEN       (&OPTION = '2') THEN(DO)
+                      WRKOBJPDM  LIB(*CURLIB) OBJATR('PF-SRC')
+                      CHGVAR     &MSGTXT1 ('You were given access to all the source code in +
+                                   your current library')
+                      CHGVAR     &MSGTXT2 ('CLLE Programs can provide easy access to your +
+                                   objects on the system')
+
+                   ENDDO
+
+                   WHEN       (&OPTION = '3') THEN(DO)
+                      CHGPRF     ??INLPGM(CHANGETHIS)
+                      MONMSG     MSGID(CPF6801)
+                      CHGVAR     &IN20 '1'
+                      CHGVAR     &MSGTXT1 ('The initial program for this user profile was +
+                                   changed')
+                      CHGVAR     &MSGTXT2 ('CLLE Programs can limit the parameters you see for +
+                                   a command')
+
+                   ENDDO
+
+                   WHEN       (&OPTION = '4') THEN(DO)
+                      RTVUSRPRF  INLPGM(&INLPGM) INLPGMLIB(&INLPGMLIB)
+                      IF         (&INLPGM = '*NONE') CHGVAR &SETTING 'NOT SET'
+                      ELSE       DO
+                         CHGVAR     &SETTING (&INLPGMLIB *TCAT '/' *CAT  &INLPGM)
+                         CHGVAR     &MSGTXT1 ('The startup program for this account is' *BCAT +
+                                      &SETTING)
+                         CHGVAR     &MSGTXT2 ('CLLE Programs can report on the logged on user +
+                                      information')
+
+                      ENDDO
+
+
+
+                   ENDDO
+
+                   WHEN       (&OPTION = '5') THEN(DO)
+                      RTVLIBD    LIB(QGPL) CRTAUT(&CRTAUT)
+                      DSPSYSVAL  SYSVAL(QCRTAUT)
+                      CHGVAR     &MSGTXT1 ('The QGPL library Creation Authority is set to +
+                                   *SYSVAL')
+                      CHGVAR     &MSGTXT2 ('CLLE Programs can report on system values and how +
+                                   they are used')
+
+                   ENDDO
+
+
+                   WHEN       (&OPTION = '6') THEN(DO)
+                      RTVUSRPRF  RTNUSRPRF(&RTNUSRPRF) PRVSIGN(&PRVSIGN)
+                      /* CYYMMDDHHMMSS */
+                      CHGVAR     &PRVSIGN (%SST(&PRVSIGN 4 2) *CAT '/' *CAT %SST(&PRVSIGN 6 2) +
+                                   *CAT '/' *CAT %SST(&PRVSIGN 2 2) *BCAT %SST(&PRVSIGN 8 2) +
+                                   *CAT ':' *CAT  %SST(&PRVSIGN 10 2) *CAT ':' *CAT  +
+                                   %SST(&PRVSIGN 12 2))
+
+                      CHGVAR     &MSGTXT1 ('Previous sign on for user' *BCAT &RTNUSRPRF *BCAT +
+                                   'was on' *BCAT &PRVSIGN)
+                      CHGVAR     &MSGTXT2 ('CLLE Programs can report on and manage the users +
+                                   on the system')
+
+
+                   ENDDO
+
+                   OTHERWISE  CHGVAR &IN30 ('1')
+
+
+                ENDSELECT
+
+                SNDRCVF
+
+             ENDDO
+
+
+             SUBR       INITIALIZE
+                CHGVAR     &IN30 '0' /* SET OPTION FIELD ERROR */
+                CHGVAR     &IN20 '0'
+                CHGVAR     &MSGTXT1 ' '
+                CHGVAR     &MSGTXT2 ' '
+
+
+             ENDSUBR
+
+
+
+
+
+
+             ENDPGM
+
+
+

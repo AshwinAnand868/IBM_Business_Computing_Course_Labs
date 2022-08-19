@@ -1,0 +1,4 @@
+          Dcl-Pr DayNumName Char(9);       // name of function and its return type
+           DayIn Packed(1);               // parameter
+          End-Pr;
+
